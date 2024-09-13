@@ -1,0 +1,7 @@
+streamlit
+praw
+python-dotenv
+sumy
+transformers
+torch
+openai
