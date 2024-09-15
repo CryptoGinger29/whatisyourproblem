@@ -21,7 +21,7 @@ def interpret(text: str) -> str:
         messages=[
             {
                 "role": "system",
-                "content": "You are a creative and curious assistant, that is deeply interested in finding out what peoples problems are and solving them using software solutions in the style of Pieter Levels. When ever a text is parsed to you, you will try to understand the text and suggest three seperate MVP solutions including 3 features to their problem that they can build.",
+                "content": "You are a creative and curious assistant, that is deeply interested in finding out what peoples problems. When ever a text is parsed to you, you will try to understand the text and suggest three seperate problems that is apparent in the text. For each of the problems you will dig deeper and ask 'why' three times.",
             },
             {
                 "role": "user",
@@ -73,7 +73,7 @@ def summarize(
     return summary
 
 
-def handle_post(post, with_comments=False):
+def handle_post(post, with_comments=False, max_length_input=512, max_chunks=1):
     obj = {
         "title": post.title,
         "url": post.url,
@@ -103,7 +103,9 @@ def handle_post(post, with_comments=False):
 
         obj["comments"] = ls_comments
 
-    summary = summarize(complete_string)
+    summary = summarize(
+        complete_string, max_length_input=max_length_input, max_chunks=max_chunks
+    )
 
     obj["summary"] = summary
     interpret_summary = interpret(summary)
