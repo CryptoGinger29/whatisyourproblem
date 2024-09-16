@@ -4,6 +4,8 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from .setup_logging import logger
 
+import time
+
 load_dotenv()
 
 r = praw.Reddit(
@@ -43,6 +45,23 @@ def summarize_gpt3(text: str) -> str:
             },
             {"role": "user", "content": text},
         ],
+    )
+
+    return completion.choices[0].message.content
+
+
+def chat(problem: str, age: int, gender: str, history: list, prompt: str) -> str:
+
+    completion = client.chat.completions.create(
+        model="gpt-4o-mini",
+        messages=[
+            {
+                "role": "system",
+                "content": f"Take on the persona of a {gender} who is {age} years old, with the following problem: {problem}.",
+            }
+        ]
+        + history
+        + [{"role": "user", "content": prompt}],
     )
 
     return completion.choices[0].message.content

@@ -1,5 +1,6 @@
 import streamlit as st
 from src import reddit
+import time
 
 st.write(
     """
@@ -33,7 +34,9 @@ def render_post(post):
     st.markdown(post["interpret_summary"])
 
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Specific post", "Hot", "New", "Top", "Rising"])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(
+    ["Specific post", "Hot", "New", "Top", "Rising", "Persona chat"]
+)
 
 # SPECIFIC POST
 with tab1:
@@ -109,3 +112,50 @@ with tab5:
 
         for post in posts:
             render_post(post)
+
+
+def streamreponse(response: str):
+
+    for word in response.split():
+        yield word + " "
+        time.sleep(0.05)
+
+
+# Initialize chat history
+if "messages" not in st.session_state:
+    st.session_state.messages = []
+
+
+with tab6:
+    problem = st.text_input("What is the problem?")
+    age = st.text_input("What is your personas age?")
+    gender = st.text_input("What is your personas gender?")
+
+    if problem and age and gender:
+        st.title("Your persona chat")
+        messages = st.container(height=500)
+
+        prompt = st.chat_input("Get personal with your persona")
+        with messages:
+            # Accept user input
+            for message in st.session_state.messages:
+                with st.chat_message(message["role"]):
+                    st.markdown(message["content"])
+
+            if prompt:
+                # Display user message in chat message container
+                st.session_state.messages.append({"role": "user", "content": prompt})
+
+                with st.chat_message("user"):
+                    st.markdown(prompt)
+
+                response = reddit.chat(
+                    problem, age, gender, st.session_state.messages, prompt
+                )
+                # Display response in chat message container
+                with st.chat_message("assistant"):
+                    st.write_stream(streamreponse(response))
+
+                st.session_state.messages.append(
+                    {"role": "assistant", "content": response}
+                )
