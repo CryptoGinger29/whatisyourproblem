@@ -16,6 +16,7 @@ Tabs guide:
 
 - **Specific post**: Enter a link to a specific Reddit post and see the summary and interpreted summary.
 - **Hot, New, Top, Rising**: Enter a subreddit name and see the summary and interpreted summary of the top post. (e.g. "learnprogramming")
+- **Persona chat**: Enter a problem, age and gender (maybe a problem you found in the other tabs) and have a chat with a persona to understand the problem better
 """
 )
 
