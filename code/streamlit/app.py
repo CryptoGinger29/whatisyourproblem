@@ -24,8 +24,12 @@ styles = {
     },
 }
 
+spinnertxt = "Loading post..."
+
+chattxt = "Synthetic user typing..."
+
 page = st_navbar(
-    ["Home", "Opportunity", "User", "Problem", "Solution", "Feedback", "Contact"],
+    ["Home", "Opportunity", "User", "Problem", "Solution", "Contact"],
     styles=styles,
 )
 
@@ -104,7 +108,8 @@ elif page == "Opportunity":
         )
 
         if redditurl.startswith("https://www.reddit.com/"):
-            post = reddit.get_specific_post(redditurl, specific_with_comments)
+            with st.spinner(spinnertxt):
+                post = reddit.get_specific_post(redditurl, specific_with_comments)
 
             render_post(post)
 
@@ -117,7 +122,8 @@ elif page == "Opportunity":
         )
 
         if subreddit:
-            posts = reddit.get_hot_posts(subreddit, 1, with_comments)
+            with st.spinner(spinnertxt):
+                posts = reddit.get_hot_posts(subreddit, 1, with_comments)
 
             for post in posts:
                 render_post(post)
@@ -131,7 +137,8 @@ elif page == "Opportunity":
         )
 
         if subreddit:
-            posts = reddit.get_new_posts(subreddit, 1, with_comments)
+            with st.spinner(spinnertxt):
+                posts = reddit.get_new_posts(subreddit, 1, with_comments)
 
             for post in posts:
                 render_post(post)
@@ -157,7 +164,8 @@ elif page == "Opportunity":
         )
 
         if subreddit:
-            posts = reddit.get_top_posts(subreddit, 1, time_filter, with_comments)
+            with st.spinner(spinnertxt):
+                posts = reddit.get_top_posts(subreddit, 1, time_filter, with_comments)
 
             for post in posts:
                 render_post(post)
@@ -171,7 +179,8 @@ elif page == "Opportunity":
         )
 
         if subreddit:
-            posts = reddit.get_rising_posts(subreddit, 1, with_comments)
+            with st.spinner(spinnertxt):
+                posts = reddit.get_rising_posts(subreddit, 1, with_comments)
 
             for post in posts:
                 render_post(post)
@@ -211,9 +220,10 @@ elif page == "User":
                 with st.chat_message("user"):
                     st.markdown(prompt)
 
-                response = reddit.chat(
-                    description, age, gender, st.session_state.messages, prompt
-                )
+                with st.spinner(chattxt):
+                    response = reddit.chat(
+                        description, age, gender, st.session_state.messages, prompt
+                    )
                 # Display response in chat message container
                 with st.chat_message("assistant"):
                     st.write_stream(streamreponse(response))
