@@ -23,7 +23,7 @@ def interpret(text: str) -> str:
         messages=[
             {
                 "role": "system",
-                "content": "You are a creative and curious assistant, that is deeply interested in finding out what peoples problems. When ever a text is parsed to you, you will try to understand the text and suggest three seperate problems that is apparent in the text. For each of the problems you will dig deeper and ask 'why' three times.",
+                "content": "You are a creative and curious assistant, that is deeply interested in finding out what peoples problems. When ever a text is parsed to you, you will try to understand the text and suggest three seperate pain points that is apparent in the text. For each of the pain points you will dig deeper and answer 'What persona experiences this pain?', 'What is the assumed problem?' and 'What is their job-to-be-done?'.",
             },
             {
                 "role": "user",
@@ -50,14 +50,14 @@ def summarize_gpt3(text: str) -> str:
     return completion.choices[0].message.content
 
 
-def chat(problem: str, age: int, gender: str, history: list, prompt: str) -> str:
+def chat(description: str, age: int, gender: str, history: list, prompt: str) -> str:
 
     completion = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
             {
                 "role": "system",
-                "content": f"Take on the persona of a {gender} who is {age} years old, with the following problem: {problem}.",
+                "content": f"Take on the persona of a {gender} who is {age} years old, with the following description: {description}.",
             }
         ]
         + history

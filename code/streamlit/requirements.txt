@@ -5,3 +5,4 @@ sumy
 transformers
 torch
 openai
+streamlit-navigation-bar
