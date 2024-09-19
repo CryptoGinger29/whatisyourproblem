@@ -226,20 +226,16 @@ elif page == "Problem":
         """
     # Problem
 
-    This is the problem page
+    This is the problem page, and a place to understand the problem better. This is a tool to help you create a problem hypothesis and understand the problem better.
 
     """
     )
-    # st.write(
-    #     """
-    # # Problem
 
-    # This is the problem page
-
-    # """
-    # )
-    # problem = st.text_input("What is the problem?")
-    # age = st.text_input("What is your personas
+    st.write(
+        """
+        TBD
+        """
+    )
 
 elif page == "Solution":
     st.write(
@@ -250,16 +246,12 @@ elif page == "Solution":
 
     """
     )
-    # st.write(
-    #     """
-    # # Solution
+    st.write(
+        """
+        TBD
+        """
+    )
 
-    # This is the solution page
-
-    # """
-    # )
-    # problem = st.text_input("What is the problem?")
-    # age = st.text_input("What is your personas
 
 elif page == "Feedback":
     st.write(
